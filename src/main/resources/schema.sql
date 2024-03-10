@@ -18,9 +18,3 @@ CREATE TABLE ORDERS
     PRIMARY KEY (id),
     FOREIGN KEY (customer_id) REFERENCES CUSTOMERS(id)
 );
-
-INSERT INTO CUSTOMERS(name, surname, age, phone_number)
-VALUES ('Petya','Temnov', 18, 89636946644);
-
-INSERT INTO ORDERS(date, product_name, amount)
-VALUES ('2024-02-14','sneakers', 18);
