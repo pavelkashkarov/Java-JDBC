@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.netology.repository.ProductRepository;
 
+import java.util.List;
+
 @RestController
 public class  ProductController {
 
@@ -18,12 +20,12 @@ public class  ProductController {
 
     @GetMapping("/")
     public String welcome() {
-        return "Welcome to JDBC Task.";
+        return "Welcome to Hebirnate Task.";
     }
 
     @GetMapping("/products/fetch-product")
-    public String fetchProduct(@RequestParam(value = "name", defaultValue = "Petya") String name) {
-        return productRepository.getProductName(name);
+    public List fetchProduct(@RequestParam String name) {
+        return productRepository.findByName(name);
     }
 }
 
