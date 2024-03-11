@@ -1,5 +1,6 @@
 package ru.netology.repository;
 
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Repository;
@@ -9,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -16,10 +18,11 @@ import java.util.stream.Collectors;
 public class ProductRepository {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
+    private final String query;
 
-    @Autowired
     public ProductRepository(NamedParameterJdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+        this.query = read("query.sql");
     }
 
     private static String read(String scriptFileName) {
@@ -31,11 +34,10 @@ public class ProductRepository {
         }
     }
 
-    public String getProductName(String name) {
-        String query = read("query.sql");
+    public List<Map<String, Object>> getProductName(String name) {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("name", name);
-        return jdbcTemplate.queryForObject(query, paramMap, String.class);
+        return jdbcTemplate.queryForList(query, paramMap);
     }
 }
 
